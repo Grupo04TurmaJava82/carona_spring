@@ -24,7 +24,7 @@ public class Veiculo {
 
     @Min(5)
     @Max(10)
-    private int ano; // Mantido como int, pois não pode ser null
+    private int ano;
 
     @Column(length = 100)
     @Pattern(regexp = "^(?!\\d+$).+", message = "O texto não pode ser apenas numérico")
