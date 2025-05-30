@@ -24,11 +24,12 @@ public class Viagem {
 	private Long id;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
+
+	@JsonIgnoreProperties("viagem")
 	private Usuario idMotorista;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("postagem")
+	@JsonIgnoreProperties("viagem")
 	private Usuario idPassageiro;
 	
 	@NotNull(message = "O Atributo idVeiculo é Obrigatório!")
@@ -49,4 +50,61 @@ public class Viagem {
 	@Positive
 	@Column(precision = 5, scale = 2)
 	private BigDecimal tempoDeViagem;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Usuario getIdMotorista() {
+		return idMotorista;
+	}
+
+	public void setIdMotorista(Usuario idMotorista) {
+		this.idMotorista = idMotorista;
+	}
+
+	public Usuario getIdPassageiro() {
+		return idPassageiro;
+	}
+
+	public void setIdPassageiro(Usuario idPassageiro) {
+		this.idPassageiro = idPassageiro;
+	}
+
+	public String getPartida() {
+		return partida;
+	}
+
+	public void setPartida(String partida) {
+		this.partida = partida;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public BigDecimal getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(BigDecimal distancia) {
+		this.distancia = distancia;
+	}
+
+	public BigDecimal getTempoDeViagem() {
+		return tempoDeViagem;
+	}
+
+	public void setTempoDeViagem(BigDecimal tempoDeViagem) {
+		this.tempoDeViagem = tempoDeViagem;
+	}
+	
 }
