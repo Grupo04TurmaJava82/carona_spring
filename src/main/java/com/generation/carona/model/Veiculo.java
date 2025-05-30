@@ -1,10 +1,15 @@
 package com.generation.carona.model;
 
-<<<<<<< HEAD
-public class Veiculo {
-=======
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Table(name = "tb_model")
 public class Veiculo {
@@ -50,5 +55,5 @@ public class Veiculo {
 
     public int getAno() { return ano; }
     public void setAno(int ano) { this.ano = ano; }
->>>>>>> a51ffc9 (:sparkles: Adiçao do model veiculo)
+
 }
