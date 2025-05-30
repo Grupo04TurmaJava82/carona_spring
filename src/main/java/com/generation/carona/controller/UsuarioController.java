@@ -30,9 +30,7 @@ public class UsuarioController {
 	
 	@GetMapping("/all")
 	public ResponseEntity <List<Usuario>> getAll(){
-		
 		return ResponseEntity.ok(usuarioRepository.findAll());
-		
 	}
 
 	@GetMapping("/{id}")
@@ -51,9 +49,7 @@ public class UsuarioController {
 
 	@PostMapping
 	public ResponseEntity<Usuario> postUsuario(@RequestBody @Valid Usuario usuario) {
-
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
-
 	}
 
 	@PutMapping
@@ -66,7 +62,6 @@ public class UsuarioController {
 		}
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		
 	}
 
 }
