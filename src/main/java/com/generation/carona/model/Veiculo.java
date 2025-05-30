@@ -1,6 +1,7 @@
 package com.generation.carona.model;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 public class Veiculo {
 =======
 import jakarta.persistence.*;
@@ -8,11 +9,22 @@ import jakarta.validation.constraints.*;
 
 @Table(name = "tb_model")
 public class Veiculo {
+=======
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+@Entity
+@Table(name = "tb_model")
+public class Veiculo {
+>>>>>>> ecbf3d9 (:sparkles: Adiçao do model veiculo)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
     @Pattern(regexp = ".*[a-zA-Z]+.*", message = "O título não pode ser apenas numérico")
+=======
+>>>>>>> ecbf3d9 (:sparkles: Adiçao do model veiculo)
     private String viagem;
 
     @Column(length = 100)
@@ -26,10 +38,17 @@ public class Veiculo {
 
     @Min(5)
     @Max(10)
+<<<<<<< HEAD
     private int ano; // Removido @NotNull porque int não pode ser null
 
     @Column(length = 100)
     @Pattern(regexp = ".*[a-zA-Z]+.*", message = "O texto não pode ser apenas numérico")
+=======
+    private int ano; // Mantido como int, pois não pode ser null
+
+    @Column(length = 100)
+    @Pattern(regexp = "^(?!\\d+$).+", message = "O texto não pode ser apenas numérico")
+>>>>>>> ecbf3d9 (:sparkles: Adiçao do model veiculo)
     private String cor;
 
     // Getters e Setters
@@ -50,5 +69,8 @@ public class Veiculo {
 
     public int getAno() { return ano; }
     public void setAno(int ano) { this.ano = ano; }
+<<<<<<< HEAD
 >>>>>>> a51ffc9 (:sparkles: Adiçao do model veiculo)
+=======
+>>>>>>> ecbf3d9 (:sparkles: Adiçao do model veiculo)
 }
