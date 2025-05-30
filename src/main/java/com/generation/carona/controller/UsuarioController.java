@@ -43,20 +43,20 @@ public class UsuarioController {
 	}
     
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<Usuario> getByUsuario(@PathVariable String usuario) {
-		return usuarioRepository.findByUsuario(usuario)
+	public ResponseEntity<Usuario> getByUsuario(@PathVariable String nome) {
+		return usuarioRepository.findByNome(nome)
 				.map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	public ResponseEntity<Usuario> postUsuario(@RequestBody @Valid Usuario usuario) {
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
 
 	}
 
-	@PutMapping("/atualizar")
+	@PutMapping
 	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
 		if(usuario.getId() == null) 
 			return ResponseEntity.badRequest().build();
