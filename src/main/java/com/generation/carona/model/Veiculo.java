@@ -24,7 +24,7 @@ public class Veiculo {
     @Size(min = 5, max = 100, message = "O atributo modelo deve ter no mínimo 5 e no máximo 100 caracteres.")
     private String modelo;
 
-    @Column(length = 20)
+    @Column(length = 8)
     @NotBlank(message = "O atributo placa é obrigatório!")
     private String placa;
     

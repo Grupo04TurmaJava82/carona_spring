@@ -23,11 +23,11 @@ public class Viagem {
 	private Long id;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("viagem")
+	@JsonIgnoreProperties("viagens")
 	private Usuario usuario;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("viagem")
+	@JsonIgnoreProperties("viagens")
 	private Veiculo veiculo;
 	
 	@Column(length = 1000)
