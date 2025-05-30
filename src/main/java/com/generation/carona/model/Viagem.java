@@ -32,8 +32,9 @@ public class Viagem {
 	@JsonIgnoreProperties("viagem")
 	private Usuario idPassageiro;
 	
-	@NotNull(message = "O Atributo idVeiculo é Obrigatório!")
-	private Long idVeiculo;
+	@ManyToOne
+	@JsonIgnoreProperties("viagem")
+	private Veiculo idVeiculo;
 	
 	@Column(length = 1000)
 	@Size(min = 10, max = 1000, message = "O atributo partida deve ter no mínimo 10 e no máximo 1000 caracteres")
