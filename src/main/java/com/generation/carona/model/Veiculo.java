@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "tb_model")
+@Table(name = "tb_veiculo")
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,10 +47,6 @@ public class Veiculo {
     public int getAno() { return ano; }
     public void setAno(int ano) { this.ano = ano; }
 
-    public BigDecimal getVelocidadeMedia() {
-        return preco;
-    }
-    public void setVelocidadeMedia(BigDecimal preco) {
-        this.preco = preco;
-    }
+    public BigDecimal getVelocidadeMedia() {return velocidadeMedia;}
+    public void setVelocidadeMedia(BigDecimal velocidadeMedia) { this.velocidadeMedia = velocidadeMedia;}
 }
