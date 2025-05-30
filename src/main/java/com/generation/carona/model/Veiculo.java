@@ -1,10 +1,5 @@
 package com.generation.carona.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +8,9 @@ import jakarta.validation.constraints.Size;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_veiculos")
@@ -39,6 +37,10 @@ public class Veiculo {
     private String cor;
 
     private BigDecimal velocidadeMedia;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("veiculo")
+    private List<Viagem> viagens;
 
     // Getters e Setters
     public Long getId() { return id; }
