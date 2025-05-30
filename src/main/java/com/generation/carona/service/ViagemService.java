@@ -3,8 +3,11 @@ package com.generation.carona.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.springframework.stereotype.Service;
+
 import com.generation.carona.model.Viagem;
 
+@Service
 public class ViagemService {
 
     public BigDecimal calcularTempoDeViagem(Viagem viagem, double velocidadeMediaKmH) {

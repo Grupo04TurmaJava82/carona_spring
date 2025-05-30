@@ -27,9 +27,7 @@ public class Veiculo {
     @Column(length = 20)
     @NotBlank(message = "O atributo placa é obrigatório!")
     private String placa;
-
-    @Min(5)
-    @Max(10)
+    
     private int ano;
 
     @Column(length = 100)
@@ -64,6 +62,12 @@ public class Veiculo {
     public void setVelocidadeMedia(BigDecimal velocidadeMedia) {
         this.velocidadeMedia = velocidadeMedia;
     }
+	public List<Viagem> getViagens() {
+		return viagens;
+	}
+	public void setViagens(List<Viagem> viagens) {
+		this.viagens = viagens;
+	}
 }
 
 

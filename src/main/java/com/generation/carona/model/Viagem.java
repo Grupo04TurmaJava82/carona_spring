@@ -23,17 +23,12 @@ public class Viagem {
 	private Long id;
 	
 	@ManyToOne
-
 	@JsonIgnoreProperties("viagem")
-	private Usuario idMotorista;
+	private Usuario usuario;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("viagem")
-	private Usuario idPassageiro;
-	
-	@ManyToOne
-	@JsonIgnoreProperties("viagem")
-	private Veiculo idVeiculo;
+	private Veiculo veiculo;
 	
 	@Column(length = 1000)
 	@Size(min = 10, max = 1000, message = "O atributo partida deve ter no mínimo 10 e no máximo 1000 caracteres")
@@ -59,20 +54,20 @@ public class Viagem {
 		this.id = id;
 	}
 
-	public Usuario getIdMotorista() {
-		return idMotorista;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdMotorista(Usuario idMotorista) {
-		this.idMotorista = idMotorista;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Usuario getIdPassageiro() {
-		return idPassageiro;
+	public Veiculo getVeiculo() {
+		return veiculo;
 	}
 
-	public void setIdPassageiro(Usuario idPassageiro) {
-		this.idPassageiro = idPassageiro;
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	public String getPartida() {
