@@ -1,5 +1,6 @@
 package com.generation.carona.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.carona.model.Viagem;
 import com.generation.carona.repository.ViagemRepository;
+import com.generation.carona.service.ViagemService;
 
 import jakarta.validation.Valid;
 
@@ -67,4 +70,48 @@ public class ViagemController {
         viagemRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+    
+    //Metodos especiais
+    @Autowired
+    private ViagemService viagemService;
+
+    @GetMapping("/{id}/calcular")
+    public ResponseEntity<String> calcularTempo(@PathVariable Long id, @RequestParam double velocidade) {
+        return viagemRepository.findById(id).map(viagem -> {
+            try {
+                BigDecimal tempo = viagemService.calcularTempoDeViagem(viagem, velocidade);
+                return ResponseEntity.ok("Tempo estimado: " + tempo + " horas");
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }).orElse(ResponseEntity.notFound().build());
+    }
+    
+ // Buscar viagens por local de partida
+    @GetMapping("/partida/{partida}")
+    public ResponseEntity<List<Viagem>> getByPartida(@PathVariable String partida) {
+        return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCase(partida));
+    }
+
+    // Buscar viagens por destino
+    @GetMapping("/destino/{destino}")
+    public ResponseEntity<List<Viagem>> getByDestino(@PathVariable String destino) {
+        return ResponseEntity.ok(viagemRepository.findByDestinoIgnoreCase(destino));
+    }
+
+    // Buscar viagens por partida e destino
+    @GetMapping("/trecho")
+    public ResponseEntity<List<Viagem>> getByTrecho(
+            @RequestParam String partida,
+            @RequestParam String destino) {
+        return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCaseAndDestinoIgnoreCase(partida, destino));
+    }
+
+    // Buscar viagens com distância maior que um valor
+    @GetMapping("/distancia/maiorque/{valor}")
+    public ResponseEntity<List<Viagem>> getByDistanciaMaiorQue(@PathVariable BigDecimal valor) {
+        return ResponseEntity.ok(viagemRepository.findByDistanciaGreaterThan(valor));
+    }
+
+
 }

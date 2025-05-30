@@ -11,14 +11,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-@Table(name = "tb_model")
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "tb_veiculos")
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Pattern(regexp = ".*[a-zA-Z]+.*", message = "O título não pode ser apenas numérico")
-    private String viagem;
 
     @Column(length = 100)
     @NotBlank(message = "O atributo modelo é obrigatório!")
@@ -31,11 +32,13 @@ public class Veiculo {
 
     @Min(5)
     @Max(10)
-    private int ano; // Removido @NotNull porque int não pode ser null
+    private int ano;
 
     @Column(length = 100)
-    @Pattern(regexp = ".*[a-zA-Z]+.*", message = "O texto não pode ser apenas numérico")
+    @Pattern(regexp = "^(?!\\d+$).+", message = "O texto não pode ser apenas numérico")
     private String cor;
+
+    private BigDecimal velocidadeMedia;
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -50,10 +53,15 @@ public class Veiculo {
     public String getCor() { return cor; }
     public void setCor(String cor) { this.cor = cor; }
 
-    public String getViagem() { return viagem; }
-    public void setViagem(String viagem) { this.viagem = viagem; }
-
     public int getAno() { return ano; }
     public void setAno(int ano) { this.ano = ano; }
 
+    public BigDecimal getVelocidadeMedia() {
+        return velocidadeMedia;
+    }
+    public void setVelocidadeMedia(BigDecimal velocidadeMedia) {
+        this.velocidadeMedia = velocidadeMedia;
+    }
 }
+
+
