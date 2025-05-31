@@ -76,16 +76,17 @@ public class ViagemController {
     private ViagemService viagemService;
 
     @GetMapping("/{id}/calcular")
-    public ResponseEntity<String> calcularTempo(@PathVariable Long id, @RequestParam double velocidade) {
+    public ResponseEntity<String> calcularTempo(@PathVariable Long id) {
         return viagemRepository.findById(id).map(viagem -> {
             try {
-                BigDecimal tempo = viagemService.calcularTempoDeViagem(viagem, velocidade);
+                BigDecimal tempo = viagemService.calcularTempoDeViagem(viagem);
                 return ResponseEntity.ok("Tempo estimado: " + tempo + " horas");
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }).orElse(ResponseEntity.notFound().build());
     }
+
     
  // Buscar viagens por local de partida
     @GetMapping("/partida/{partida}")
@@ -97,14 +98,6 @@ public class ViagemController {
     @GetMapping("/destino/{destino}")
     public ResponseEntity<List<Viagem>> getByDestino(@PathVariable String destino) {
         return ResponseEntity.ok(viagemRepository.findByDestinoIgnoreCase(destino));
-    }
-
-    // Buscar viagens por partida e destino
-    @GetMapping("/trecho")
-    public ResponseEntity<List<Viagem>> getByTrecho(
-            @RequestParam String partida,
-            @RequestParam String destino) {
-        return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCaseAndDestinoIgnoreCase(partida, destino));
     }
 
     // Buscar viagens com distância maior que um valor

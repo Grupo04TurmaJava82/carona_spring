@@ -19,7 +19,4 @@ public interface ViagemRepository extends JpaRepository<Viagem, Long> {
 
     // Buscar viagens com distância maior que o valor informado
     List<Viagem> findByDistanciaGreaterThan(BigDecimal distancia);
-
-    // Buscar viagens por partida + destino
-    List<Viagem> findByPartidaIgnoreCaseAndDestinoIgnoreCase(String partida, String destino);
 }
