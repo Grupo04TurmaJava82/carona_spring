@@ -2,12 +2,14 @@ package com.generation.carona.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.generation.carona.model.Veiculo;
 import com.generation.carona.model.Viagem;
+import com.generation.carona.repository.VeiculoRepository;
 import com.generation.carona.repository.ViagemRepository;
 
 @Service
@@ -15,11 +17,15 @@ public class ViagemService {
 	
     @Autowired
     private ViagemRepository viagemRepository;
+    
+    @Autowired
+	private VeiculoRepository veiculoRepository;
 	
     public BigDecimal calcularTempoDeViagem(Viagem viagem) {
-        Veiculo veiculo = viagem.getVeiculo();
-
-        if (veiculo == null || veiculo.getVelocidadeMedia() == null || veiculo.getVelocidadeMedia().doubleValue() <= 0) {
+        Long veiculoId = viagem.getVeiculo().getId();
+        Optional<Veiculo> veiculo = veiculoRepository.findById(veiculoId);
+        if (veiculo.get() == null || veiculo.get().getVelocidadeMedia() == null ||
+        		veiculo.get().getVelocidadeMedia().doubleValue() <= 0) {
             throw new IllegalArgumentException("A velocidade média do veículo deve ser maior que zero.");
         }
 
@@ -27,7 +33,7 @@ public class ViagemService {
             throw new IllegalArgumentException("Distância da viagem não pode ser nula.");
         }
 
-        double tempo = viagem.getDistancia().doubleValue() / veiculo.getVelocidadeMedia().doubleValue();
+        double tempo = viagem.getDistancia().doubleValue() / veiculo.get().getVelocidadeMedia().doubleValue();
         return BigDecimal.valueOf(tempo).setScale(2, RoundingMode.HALF_UP);
     }
     
