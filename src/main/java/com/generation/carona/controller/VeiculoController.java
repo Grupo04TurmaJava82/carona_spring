@@ -2,6 +2,8 @@ package com.generation.carona.controller;
 
 import com.generation.carona.model.Veiculo;
 import com.generation.carona.repository.VeiculoRepository;
+import com.generation.carona.service.VeiculoService;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ public class VeiculoController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+	
+	@Autowired VeiculoService veiculoService;
 
 	@GetMapping
 	public ResponseEntity<List<Veiculo>> getAll(){
@@ -46,22 +50,18 @@ public class VeiculoController {
 
 	@PostMapping
 	public ResponseEntity<Veiculo> postVeiculo(@Valid @RequestBody Veiculo veiculo){
-        if (veiculo.getId() != null && veiculoRepository.existsById(veiculo.getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID de veículo já existe.");
-        }
-		Veiculo veiculoSalvo = veiculoRepository.save(veiculo);
-		return ResponseEntity.status(HttpStatus.CREATED).body(veiculoSalvo);
+		return veiculoService.cadastrarVeiculo(veiculo)
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Veiculo> putVeiculo(@PathVariable Long id, @Valid @RequestBody Veiculo veiculo) {
-		if (!veiculoRepository.existsById(id)){
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado ");
-		}
-        veiculo.setId(id);
-		Veiculo veiculoAtualizado = veiculoRepository.save(veiculo);
-		return ResponseEntity.ok(veiculoAtualizado);
+	@PutMapping
+	public ResponseEntity<Veiculo> putVeiculo(@Valid @RequestBody Veiculo veiculo) {
+		return veiculoService.atualizarVeiculo(veiculo)
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteVeiculo(@PathVariable Long id) {
 		
