@@ -126,32 +126,395 @@ erDiagram
 
 A API fornece os seguintes endpoints:
 
-**GET EXERCICIOS**
+VIAGENS:
+**GET VIAGENS**
 
 ```markdown
-GET /exercicio - Recuperar uma lista de todos exercicios.
+GET / viagens - Recuperar uma lista de todas as viagens.
+GET / /partida /Rua das Flores - Recuperar uma lista de todas as viagens com base na partida.
+GET / /partida /Avenida Paulista - Recuperar uma lista de todas as viagens com base no Destino.
 ```
 
 ```json
 [
-  {
-    "id": 1,
-    "nome": "Treino Ombro",
-    "carga": 20,
-    "repeticoes": 12,
-    "series": 3
-  },
-  {
-    "id": 3,
-    "nome": "Treino teste",
-    "carga": 20,
-    "repeticoes": 15,
-    "series": 3
-  }
+	{
+		"id": 1,
+		"usuario": {
+			"id": 1,
+			"nome": "Eduardo",
+			"usuario": "eduardo@email.com",
+			"senha": "minhaSenha123",
+			"foto": "https://exemplo.com/foto.jpg"
+		},
+		"veiculo": {
+			"id": 1,
+			"modelo": "Toyota Corolla",
+			"placa": "XYZ9876",
+			"ano": 2022,
+			"cor": "Azul",
+			"velocidadeMedia": 90
+		},
+		"partida": "Rua das Flores, 123, Nova Odessa",
+		"destino": "Avenida Paulista, 456, São Paulo",
+		"distancia": 60,
+		"tempoDeViagem": 0.67
+	},
+	{
+		"id": 2,
+		"usuario": {
+			"id": 1,
+			"nome": "Eduardo",
+			"usuario": "eduardo@email.com",
+			"senha": "minhaSenha123",
+			"foto": "https://exemplo.com/foto.jpg"
+		},
+		"veiculo": {
+			"id": 1,
+			"modelo": "Toyota Corolla",
+			"placa": "XYZ9876",
+			"ano": 2022,
+			"cor": "Azul",
+			"velocidadeMedia": 90
+		},
+		"partida": "Rua das Flores, 123, Nova Odessa",
+		"destino": "Avenida Paulista, 456, São Paulo",
+		"distancia": 20,
+		"tempoDeViagem": 0.22
+	}
 ]
 ```
+```markdown
+GET / viagens/distancia/maiorque/20 viagens - Recuperar uma lista de viagens com base na distância.
+```
+```json
+[
+	{
+		"id": 1,
+		"usuario": {
+			"id": 1,
+			"nome": "Eduardo",
+			"usuario": "eduardo@email.com",
+			"senha": "minhaSenha123",
+			"foto": "https://exemplo.com/foto.jpg"
+		},
+		"veiculo": {
+			"id": 1,
+			"modelo": "Toyota Corolla",
+			"placa": "XYZ9876",
+			"ano": 2022,
+			"cor": "Azul",
+			"velocidadeMedia": 90
+		},
+		"partida": "Rua das Flores, 123, Nova Odessa",
+		"destino": "Avenida Paulista, 456, São Paulo",
+		"distancia": 60,
+		"tempoDeViagem": 0.67
+	}
+]
+```
+**POST VIAGENS**
 
-**POST EXERCICIOS**
+```markdown
+POST /viagens - Registra uma nova viagem
+```
+
+```json
+{
+  "usuario": {
+               "id": 1
+            },
+  "veiculo": {
+               "id": 1
+            },
+  "partida": "Rua das Flores, 123, Nova Odessa",
+  "destino": "Avenida Paulista, 456, São Paulo",
+  "distancia": 20
+}
+
+```
+
+**UPDATE VIAGENS**
+
+```markdown
+PUT /viagens - Atualiza viagem existente
+```
+
+```json
+{
+  "id": 1,
+{
+  "usuario": {
+               "id": 1
+            },
+  "veiculo": {
+               "id": 1
+            },
+  "partida": "Rua das Aves, 25, Nova Veneza",
+  "destino": "Avenida Paulista, 456, São Paulo",
+  "distancia": 20
+}
+```
+
+
+VEICULOS:
+
+**GET VEICULOS**
+
+```markdown
+GET /veiculos - Recuperar uma lista de todos os carros.
+```
+
+```json
+[
+	{
+		"id": 1,
+		"modelo": "Toyota Corolla",
+		"placa": "XYZ9876",
+		"ano": 2022,
+		"cor": "Azul",
+		"velocidadeMedia": 90,
+		"viagens": [
+			{
+				"id": 1,
+				"usuario": {
+					"id": 1,
+					"nome": "Eduardo",
+					"usuario": "eduardo@email.com",
+					"senha": "minhaSenha123",
+					"foto": "https://exemplo.com/foto.jpg"
+				},
+				"partida": "Rua das Flores, 123, Nova Odessa",
+				"destino": "Avenida Paulista, 456, São Paulo",
+				"distancia": 60,
+				"tempoDeViagem": 0.67
+			},
+			{
+				"id": 2,
+				"usuario": {
+					"id": 1,
+					"nome": "Eduardo",
+					"usuario": "eduardo@email.com",
+					"senha": "minhaSenha123",
+					"foto": "https://exemplo.com/foto.jpg"
+				},
+				"partida": "Rua das Flores, 123, Nova Odessa",
+				"destino": "Avenida Paulista, 456, São Paulo",
+				"distancia": 20,
+				"tempoDeViagem": 0.22
+			}
+		]
+	},
+	{
+		"id": 2,
+		"modelo": "Toyota Corolla",
+		"placa": "XYZ9876",
+		"ano": 2019,
+		"cor": "Azul",
+		"velocidadeMedia": 90,
+		"viagens": []
+	},
+	{
+		"id": 4,
+		"modelo": "Hyundai HB20",
+		"placa": "HJS7822",
+		"ano": 2017,
+		"cor": "Prata",
+		"velocidadeMedia": 60,
+		"viagens": []
+	}
+]
+```
+```markdown
+GET /veiculos /1 - Busca carros pelo ID.
+```
+```json
+{
+	"id": 1,
+	"modelo": "Toyota Corolla",
+	"placa": "XYZ9876",
+	"ano": 2022,
+	"cor": "Azul",
+	"velocidadeMedia": 90,
+	"viagens": [
+		{
+			"id": 1,
+			"usuario": {
+				"id": 1,
+				"nome": "Eduardo",
+				"usuario": "eduardo@email.com",
+				"senha": "minhaSenha123",
+				"foto": "https://exemplo.com/foto.jpg"
+			},
+			"partida": "Rua das Flores, 123, Nova Odessa",
+			"destino": "Avenida Paulista, 456, São Paulo",
+			"distancia": 60,
+			"tempoDeViagem": 0.67
+		},
+		{
+			"id": 2,
+			"usuario": {
+				"id": 1,
+				"nome": "Eduardo",
+				"usuario": "eduardo@email.com",
+				"senha": "minhaSenha123",
+				"foto": "https://exemplo.com/foto.jpg"
+			},
+			"partida": "Rua das Flores, 123, Nova Odessa",
+			"destino": "Avenida Paulista, 456, São Paulo",
+			"distancia": 20,
+			"tempoDeViagem": 0.22
+		}
+	]
+}
+```
+
+```markdown
+GET /veiculos /placa /HJS7822- Busca carros pela placa.
+```
+```json
+[
+	{
+		"id": 4,
+		"modelo": "Hyundai HB20",
+		"placa": "HJS7822",
+		"ano": 2017,
+		"cor": "Prata",
+		"velocidadeMedia": 60,
+		"viagens": []
+	}
+]
+```
+**POST VEICULOS**
+
+```markdown
+POST /veiculos - Registra um novo exercício no aplicativo
+```
+
+```json
+{
+  "modelo": "Hyundai HB20",
+  "placa": "HJS7822",
+  "ano": 2017,
+  "cor": "Prata",
+  "velocidadeMedia": 60.0
+}
+
+```
+
+**UPDATE VEICULOS**
+
+```markdown
+PUT /veiculos - Atualiza um veículo existente
+```
+
+```json
+{
+	"id": 1,
+  "modelo": "Toyota Corolla",
+  "placa": "XYZ9876",
+  "ano": 2022,
+  "cor": "Azul",
+  "velocidadeMedia": 90.0
+}
+```
+
+USUÁRIOS:
+
+**GET USUÁRIOS**
+
+```markdown
+GET /usuarios - Recuperar uma lista de todos os usuários.
+```
+
+```json
+[
+	{
+		"id": 1,
+		"nome": "Root1",
+		"usuario": "Root1@email.com",
+		"senha": "minhaSenha123",
+		"foto": "https://exemplo.com/foto.jpg",
+		"viagens": [
+			{
+				"id": 1,
+				"veiculo": {
+					"id": 1,
+					"modelo": "Toyota Corolla",
+					"placa": "XYZ9876",
+					"ano": 2022,
+					"cor": "Azul",
+					"velocidadeMedia": 90
+				},
+				"partida": "Rua das Flores, 123, Nova Odessa",
+				"destino": "Avenida Paulista, 456, São Paulo",
+				"distancia": 60,
+				"tempoDeViagem": 0.67
+			},
+			{
+				"id": 2,
+				"veiculo": {
+					"id": 1,
+					"modelo": "Toyota Corolla",
+					"placa": "XYZ9876",
+					"ano": 2022,
+					"cor": "Azul",
+					"velocidadeMedia": 90
+				},
+				"partida": "Rua das Flores, 123, Nova Odessa",
+				"destino": "Avenida Paulista, 456, São Paulo",
+				"distancia": 20,
+				"tempoDeViagem": 0.22
+			}
+		]
+	},
+	{
+		"id": 2,
+		"nome": "Root2",
+		"usuario": "Root2@email.com",
+		"senha": "minhaSenha123",
+		"foto": "https://exemplo.com/foto.jpg",
+		"viagens": []
+	},
+	{
+		"id": 3,
+		"nome": "Root3",
+		"usuario": "Root3@email.com",
+		"senha": "minhaSenha123",
+		"foto": "https://exemplo.com/foto.jpg",
+		"viagens": []
+	}
+]
+```
+```markdown
+GET /usuarios /1 - Busca usuarios pelo ID.
+```
+```json
+{
+"id": 1,
+		"nome": "Root1",
+		"usuario": "Root1@email.com",
+		"senha": "minhaSenha123",
+		"foto": "https://exemplo.com/foto.jpg",
+		"viagens": [
+			{
+				"id": 1,
+				"veiculo": {
+					"id": 1,
+					"modelo": "Toyota Corolla",
+					"placa": "XYZ9876",
+					"ano": 2022,
+					"cor": "Azul",
+					"velocidadeMedia": 90
+				},
+				"partida": "Rua das Flores, 123, Nova Odessa",
+				"destino": "Avenida Paulista, 456, São Paulo",
+				"distancia": 60,
+				"tempoDeViagem": 0.67
+		   }
+	   ]
+   }
+```
+**POST USUÁRIOS**
 
 ```markdown
 POST /exercicio - Registra um novo exercício no aplicativo
@@ -159,14 +522,15 @@ POST /exercicio - Registra um novo exercício no aplicativo
 
 ```json
 {
-  "nome": "Treino Braço e perna",
-  "carga": 20,
-  "repeticoes": 12,
-  "series": 3
+  "nome": "Root1",
+  "usuario": "Root1@email.com",
+  "senha": "minhaSenha123",
+  "foto": "https://exemplo.com/foto.jpg"
 }
+
 ```
 
-**UPDATE EXERCICIOS**
+**UPDATE USUÁRIOS**
 
 ```markdown
 PUT /exercicio - Atualiza um exercicio existente
@@ -175,10 +539,10 @@ PUT /exercicio - Atualiza um exercicio existente
 ```json
 {
   "id": 32,
-  "nome": "Treino teste",
-  "carga": 20,
-  "repeticoes": 15,
-  "series": 3
+  "nome": "Root1",
+  "usuario": "Root1_oficial@email.com",
+  "senha": "minhaSenha123",
+  "foto": "https://exemplo.com/foto.jpg"
 }
 ```
 
