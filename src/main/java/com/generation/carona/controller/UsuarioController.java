@@ -52,9 +52,10 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
 	}
 
+	
 	@PutMapping
 	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
-		if(usuario.getId() == null) 
+		if(!usuarioRepository.existsById(usuario.getId())) 
 			return ResponseEntity.badRequest().build();
 		
 		if (usuarioRepository.existsById(usuario.getId())) {
