@@ -1,7 +1,6 @@
 package com.generation.carona.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +27,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+
 	@GetMapping
 	public ResponseEntity <List<Usuario>> getAll(){
 		return ResponseEntity.ok(usuarioRepository.findAll());
