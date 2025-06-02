@@ -61,8 +61,14 @@ public class ViagemController {
         if (!viagemRepository.existsById(viagem.getId()))
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(viagemRepository.save(viagem));
+        try {
+            Viagem viagemAtualizada = viagemService.cadastrarViagemComTempo(viagem);
+            return ResponseEntity.ok(viagemAtualizada);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
 
     // Deletar viagem
     @DeleteMapping("/{id}")
@@ -78,7 +84,7 @@ public class ViagemController {
     @Autowired
     private ViagemService viagemService;
  
- // Buscar viagens por local de partida
+    // Buscar viagens por local de partida
     @GetMapping("/partida/{partida}")
     public ResponseEntity<List<Viagem>> getByPartida(@PathVariable String partida) {
         return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCase(partida));
@@ -95,6 +101,5 @@ public class ViagemController {
     public ResponseEntity<List<Viagem>> getByDistanciaMaiorQue(@PathVariable BigDecimal valor) {
         return ResponseEntity.ok(viagemRepository.findByDistanciaGreaterThan(valor));
     }
-
 
 }

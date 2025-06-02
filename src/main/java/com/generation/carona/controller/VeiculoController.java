@@ -53,12 +53,11 @@ public class VeiculoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(veiculoSalvo);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Veiculo> putVeiculo(@PathVariable Long id, @Valid @RequestBody Veiculo veiculo) {
-		if (!veiculoRepository.existsById(id)){
+	@PutMapping
+	public ResponseEntity<Veiculo> putVeiculo(@Valid @RequestBody Veiculo veiculo) {
+		if (!veiculoRepository.existsById(veiculo.getId())){
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado ");
 		}
-        veiculo.setId(id);
 		Veiculo veiculoAtualizado = veiculoRepository.save(veiculo);
 		return ResponseEntity.ok(veiculoAtualizado);
 	}
