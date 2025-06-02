@@ -87,13 +87,13 @@ public class ViagemController {
     // Buscar viagens por local de partida
     @GetMapping("/partida/{partida}")
     public ResponseEntity<List<Viagem>> getByPartida(@PathVariable String partida) {
-        return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCase(partida));
+        return ResponseEntity.ok(viagemRepository.findByPartidaIgnoreCaseContaining(partida));
     }
 
     // Buscar viagens por destino
     @GetMapping("/destino/{destino}")
     public ResponseEntity<List<Viagem>> getByDestino(@PathVariable String destino) {
-        return ResponseEntity.ok(viagemRepository.findByDestinoIgnoreCase(destino));
+        return ResponseEntity.ok(viagemRepository.findByDestinoIgnoreCaseContaining(destino));
     }
 
     // Buscar viagens com distância maior que um valor

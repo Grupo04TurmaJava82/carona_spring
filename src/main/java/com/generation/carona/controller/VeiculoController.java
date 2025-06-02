@@ -61,6 +61,7 @@ public class VeiculoController {
 		Veiculo veiculoAtualizado = veiculoRepository.save(veiculo);
 		return ResponseEntity.ok(veiculoAtualizado);
 	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteVeiculo(@PathVariable Long id) {
 		
