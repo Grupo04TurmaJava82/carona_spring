@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.carona.model.Viagem;
@@ -48,8 +47,12 @@ public class ViagemController {
     // Criar nova viagem
     @PostMapping
     public ResponseEntity<Viagem> post(@Valid @RequestBody Viagem viagem) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(viagemRepository.save(viagem));
+        try {
+            Viagem novaViagem = viagemService.cadastrarViagemComTempo(viagem);
+            return ResponseEntity.status(HttpStatus.CREATED).body(novaViagem);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // Atualizar viagem existente
@@ -74,20 +77,7 @@ public class ViagemController {
     //Metodos especiais
     @Autowired
     private ViagemService viagemService;
-
-    @GetMapping("/{id}/calcular")
-    public ResponseEntity<String> calcularTempo(@PathVariable Long id) {
-        return viagemRepository.findById(id).map(viagem -> {
-            try {
-                BigDecimal tempo = viagemService.calcularTempoDeViagem(viagem);
-                return ResponseEntity.ok("Tempo estimado: " + tempo + " horas");
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        }).orElse(ResponseEntity.notFound().build());
-    }
-
-    
+ 
  // Buscar viagens por local de partida
     @GetMapping("/partida/{partida}")
     public ResponseEntity<List<Viagem>> getByPartida(@PathVariable String partida) {
